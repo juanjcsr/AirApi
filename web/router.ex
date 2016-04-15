@@ -17,10 +17,12 @@ defmodule AirApi.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    get "/todos", TodoHtmlController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", AirApi do
-  #   pipe_through :api
-  # end
+  #Other scopes may use custom stacks.
+  scope "/api", AirApi do
+    pipe_through :api
+    resources "/todos", TodoController
+  end
 end
