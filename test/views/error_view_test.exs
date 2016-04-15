@@ -18,4 +18,15 @@ defmodule AirApi.ErrorViewTest do
     assert render_to_string(AirApi.ErrorView, "505.html", []) ==
            "Server internal error"
   end
+
+  test "render 404.json" do
+    assert render(AirApi.ErrorView, "404.json", []) ==
+          %{errors: %{detail: "not found"}}
+  end
+
+  test "render 500.json" do
+    assert render(AirApi.ErrorView, "500.json", []) ==
+          %{errors: %{detail: "internal server error"}}
+  end
+
 end
