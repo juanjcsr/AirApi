@@ -10,4 +10,11 @@ defmodule AirApi.TodoHtmlController do
     render(conn, "index.html", todos: todos)
   end
 
+  def new(conn, _params) do
+    changeset = Todo.changeset(%Todo{})
+    render(conn, "new.html", changeset: changeset)
+  end
+
+  #def create(conn, %{"todo"})
+
 end

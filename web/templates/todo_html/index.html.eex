@@ -1,3 +1,19 @@
-<div class="jumbotron">
-  <p><%= @todos %></p>
-</div>
+<h2>Showing tasks</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for todo <- @todos do %>
+    <tr>
+      <td><%= todo.description %></td>
+
+      </td>
+    </tr>
+<% end %>
+</table>
+
+<%= link "New", to: todo_html_path(@conn, :new) %>

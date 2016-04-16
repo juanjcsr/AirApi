@@ -18,6 +18,9 @@ defmodule AirApi.Router do
 
     get "/", PageController, :index
     get "/todos", TodoHtmlController, :index
+    get "/todos/new", TodoHtmlController, :new
+    post "/todos", TodoHtmlController, :create
+    resources "/todols", TodolController
   end
 
   #Other scopes may use custom stacks.
