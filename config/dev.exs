@@ -35,8 +35,8 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :air_api, AirApi.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "airapp",
-  password: "airapp",
+  username: "postgres",
+  password: "postgres",
   database: "air_api_dev",
   hostname: "localhost",
   pool_size: 10

@@ -20,6 +20,11 @@ defmodule AirApi.Router do
     get "/todos", TodoHtmlController, :index
     get "/todos/new", TodoHtmlController, :new
     post "/todos", TodoHtmlController, :create
+    get "/todos/:id", TodoHtmlController, :show
+    get "/todos/:id/edit", TodoHtmlController, :edit
+    delete "/todos/:id", TodoHtmlController, :delete
+    patch "/todos/:id", TodoHtmlController, :update
+    put "/todos/:id", TodoHtmlController, :update
     resources "/todols", TodolController
   end
 
