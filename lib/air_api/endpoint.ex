@@ -34,6 +34,7 @@ defmodule AirApi.Endpoint do
     store: :cookie,
     key: "_air_api_key",
     signing_salt: "5tIe4x2w"
+  plug CORSPlug
 
   plug AirApi.Router
 end
