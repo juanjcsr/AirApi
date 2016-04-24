@@ -2,7 +2,7 @@ defmodule AirApi.TodoControllerTest do
   use AirApi.ConnCase
 
   alias AirApi.Todo
-  @valid_attrs %{description: "some content"}
+  @valid_attrs %{description: "some content", cost: 123}
   @invalid_attrs %{}
 
   setup %{conn: conn} do
@@ -18,7 +18,8 @@ defmodule AirApi.TodoControllerTest do
     todo = Repo.insert! %Todo{}
     conn = get conn, todo_path(conn, :show, todo)
     assert json_response(conn, 200)["data"] == %{"id" => todo.id,
-      "description" => todo.description}
+      "description" => todo.description,
+      "cost" => todo.cost}
   end
 
   test "does not show resource and instead throw error when id is nonexistent", %{conn: conn} do

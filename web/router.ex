@@ -25,12 +25,13 @@ defmodule AirApi.Router do
     delete "/todos/:id", TodoHtmlController, :delete
     patch "/todos/:id", TodoHtmlController, :update
     put "/todos/:id", TodoHtmlController, :update
-    resources "/todols", TodolController
+
   end
 
   #Other scopes may use custom stacks.
   scope "/api", AirApi do
     pipe_through :api
     resources "/todos", TodoController
+    resources "/users", UserController, only: [:create]
   end
 end
