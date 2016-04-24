@@ -2,7 +2,7 @@ defmodule AirApi.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "rooms:*", AirApi.RoomChannel
+  channel "rooms:*", AirApi.RoomChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
