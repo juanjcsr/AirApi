@@ -8,6 +8,10 @@
     <%= label f, :description, class: "control-label" %>
     <%= text_input f, :description, class: "form-control" %>
     <%= error_tag f, :description %>
+
+    <%= label f, :cost, class: "control-label" %>
+    <%= text_input f, :cost, class: "form-control" %>
+    <%= error_tag f, :cost %>
   </div>
 
   <div class="form-group">

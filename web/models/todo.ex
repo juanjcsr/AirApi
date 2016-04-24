@@ -3,11 +3,12 @@ defmodule AirApi.Todo do
 
   schema "todos" do
     field :description, :string
+    field :cost, :float
 
     timestamps
   end
 
-  @required_fields ~w(description)
+  @required_fields ~w(description cost)
   @optional_fields ~w()
 
   @doc """

@@ -11,6 +11,8 @@ defmodule AirApi.TodoView do
 
   def render("todo.json", %{todo: todo}) do
     %{id: todo.id,
-      description: todo.description}
+      description: todo.description,
+      cost: todo.cost
+     }
   end
 end

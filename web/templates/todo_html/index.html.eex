@@ -4,12 +4,14 @@
   <thead>
     <tr>
       <th>Description</th>
+      <th>Cost</th>
     </tr>
   </thead>
   <tbody>
 <%= for todo <- @todos do %>
     <tr>
       <td><%= todo.description %></td>
+      <td><%= todo.cost %></td>
 
       <td class="text-right">
         <%= link "Show", to: todo_html_path(@conn, :show, todo), class: "btn btn-default btn-xs" %>
