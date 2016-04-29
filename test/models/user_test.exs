@@ -3,7 +3,7 @@ defmodule AirApi.UserTest do
 
   alias AirApi.User
 
-  @valid_attrs %{email: "bar@baz.com", password: "s3cr3t"}
+  @valid_attrs %{email: "bar@baz.com", password: "s3cr3t", password_confirmation: "s3cr3t"}
 
   test "changeset with valid attributes" do
     changeset = User.changeset(%User{}, @valid_attrs)

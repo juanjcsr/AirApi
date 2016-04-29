@@ -3,7 +3,7 @@ defmodule AirApi.UserControllerTest do
 
 
   alias AirApi.User
-  @valid_attrs %{email: "hola@test.com", password: "password"}
+  @valid_attrs %{email: "hola@test.com", password: "password", password_confirmation: "password"}
   @invalid_attrs %{}
 
   setup %{conn: conn} do
@@ -16,7 +16,7 @@ defmodule AirApi.UserControllerTest do
     assert body["data"]["id"]
     assert body["data"]["email"]
     refute body["data"]["password"]
-    assert Repo.get_by(User, email: "hola@test")
+    assert Repo.get_by(User, email: "hola@test.com")
   end
 
   test "does not create resource and render errors when invalid", %{conn: conn} do

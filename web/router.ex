@@ -26,6 +26,9 @@ defmodule AirApi.Router do
     patch "/todos/:id", TodoHtmlController, :update
     put "/todos/:id", TodoHtmlController, :update
 
+    get "/sign_up", LoginController, :sign_up
+    post "/sign_up", LoginController, :create
+    get "/sign_in", LoginController, :sign_in
   end
 
   #Other scopes may use custom stacks.
