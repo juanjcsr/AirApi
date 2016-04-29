@@ -9,6 +9,6 @@ defmodule AirApi.Repo.Migrations.CreateSession do
       timestamps
     end
     create index(:sessions, [:user_id])
-
+    create index(:sessions, [:token])
   end
 end
