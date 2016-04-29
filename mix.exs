@@ -39,6 +39,7 @@ defmodule AirApi.Mixfile do
      {:gettext, "~> 0.9"},
      {:cors_plug, "~> 1.1"},
      {:comeonin, "~> 2.4"},
+     {:secure_random, "~> 0.2"},
      {:cowboy, "~> 1.0"}]
   end
 

@@ -21,7 +21,7 @@ defmodule AirApi.LoginController do
     case Repo.insert(changeset) do
       {:ok, user} ->
         conn
-        |> put_status(:created)
+        |> put_flash(:info, "Successfully registered")
         |> redirect(to: page_path(conn, :index))
       {:error, changeset} ->
         render(conn, "sign_up.html", changeset: changeset)

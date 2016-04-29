@@ -12,8 +12,8 @@ config :logger, level: :warn
 # Configure your database
 config :air_api, AirApi.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
+  username: "airapi",
+  password: "airapi",
   database: "air_api_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
