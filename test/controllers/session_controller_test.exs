@@ -4,7 +4,7 @@ defmodule AirApi.SessionControllerTest do
   alias AirApi.Session
   alias AirApi.User
 
-  @valid_attrs %{email: "example@lol.com", password: "s3cr3t"}
+  @valid_attrs %{email: "example@lol.com", password: "s3cr3t", password_confirmation: "s3cr3t"}
 
   setup %{conn: conn} do
     changeset = User.registration_changeset(%User{}, @valid_attrs)
@@ -14,6 +14,7 @@ defmodule AirApi.SessionControllerTest do
 
   test "creates and renders resource when data is valid", %{conn: conn} do
     conn = post conn, session_path(conn, :create), user: @valid_attrs
+    #IO.puts(conn)
     assert token = json_response(conn, 201)["data"]["token"]
     assert Repo.get_by(Session, token: token)
   end
@@ -24,7 +25,8 @@ defmodule AirApi.SessionControllerTest do
   end
 
   test "does not create resource and renders error when email is not valid " do
-
-    conn = post conn
+    conn = post conn, session_path(conn, :create), user: Map.put(@valid_attrs, :email, "not@foiund.com")
+    assert json_response(conn, 401)["errors"] != %{}
+    #conn = post conn
   end
-ende
+end

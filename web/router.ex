@@ -36,5 +36,6 @@ defmodule AirApi.Router do
     pipe_through :api
     resources "/todos", TodoController
     resources "/users", UserController, only: [:create]
+    resources "/sessions", SessionController, only: [:create]
   end
 end
