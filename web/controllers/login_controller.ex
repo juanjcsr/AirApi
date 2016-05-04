@@ -6,12 +6,17 @@ defmodule AirApi.LoginController do
   plug :scrub_params, "user" when action in [:create, :update]
 
   def sign_in(conn, _params) do
-    render(conn, "sign_in.html")
+    changeset = User.changeset(%User{})
+    render(conn, "sign_in.html", changeset: changeset)
   end
 
   def sign_up(conn, _params) do
     changeset = User.changeset(%User{})
     render(conn, "sign_up.html", changeset: changeset)
+  end
+
+  def create_session(conn, %{"user" => user_params}) do
+
   end
 
   def create(conn, %{"user" => user_params}) do

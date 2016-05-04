@@ -29,6 +29,7 @@ defmodule AirApi.Router do
     get "/sign_up", LoginController, :sign_up
     post "/sign_up", LoginController, :create
     get "/sign_in", LoginController, :sign_in
+    post "/sign_in", SessionController, :create_web_session
   end
 
   #Other scopes may use custom stacks.
