@@ -20,4 +20,19 @@ defmodule AirApi.AuthenticationTest do
 
     assert conn.assigns.current_user
   end
+
+  test "invalid token", %{conn: conn} do
+    conn = conn
+    |> put_auth_token_in_header("foo")
+    |> Authentication.call(@opts)
+
+    assert conn.status == 401
+    assert conn.halted
+  end
+
+  test "no token", %{conn: conn} do
+    conn = Authentication.call(conn, @opts)
+    assert conn.status == 401
+    assert conn.halted
+  end
 end
