@@ -5,6 +5,8 @@ defmodule AirApi.AuthenticationTest do
 
   @opts Authentication.init([])
 
+  @valid_attrs %{email: "bar@baz.com", password: "s3cr3t", password_confirmation: "s3cr3t"}
+
   def put_auth_token_in_header(conn, token) do
     conn
     |> put_req_header("authorization",  "Token token=\"#{token}\"")
