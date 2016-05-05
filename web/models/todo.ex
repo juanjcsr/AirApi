@@ -4,11 +4,12 @@ defmodule AirApi.Todo do
   schema "todos" do
     field :description, :string
     field :cost, :float
+    belongs_to :user, AirApi.User, foreign_key: :owner_id
 
     timestamps
   end
 
-  @required_fields ~w(description cost)
+  @required_fields ~w(description cost owner_id)
   @optional_fields ~w()
 
   @doc """

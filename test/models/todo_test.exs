@@ -3,7 +3,7 @@ defmodule AirApi.TodoTest do
 
   alias AirApi.Todo
 
-  @valid_attrs %{description: "some content", cost: 123}
+  @valid_attrs %{description: "some content", cost: 123, owner_id: 1}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
