@@ -66,6 +66,7 @@ defmodule AirApi.TodoControllerTest do
     conn = post conn, todo_path(conn, :create), todo: @valid_attrs
     assert json_response(conn, 201)["data"]["id"]
     todo = Repo.get_by(Todo, @valid_attrs)
+
     assert todo
     assert todo.owner_id == current_user.id
   end
@@ -77,7 +78,8 @@ defmodule AirApi.TodoControllerTest do
 
   test "updates and renders chosen resource when data is valid", %{conn: conn, current_user: current_user} do
     todo = Repo.insert! %Todo{}
-    conn = put conn, todo_path(conn, :create), todo: @valid_attrs
+    conn = put conn, todo_path(conn, :update, todo), todo: @valid_attrs
+    IO.inspect(conn)
     assert json_response(conn, 201)["data"]["id"]
     todo = Repo.get_by(Todo, @valid_attrs)
     assert todo
