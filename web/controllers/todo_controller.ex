@@ -5,22 +5,25 @@ defmodule AirApi.TodoController do
 
   plug :scrub_params, "todo" when action in [:create, :update]
 
-  plug AirApi.Authentication
+  #plug AirApi.Authentication
 
   def index(conn, _params) do
-    #todos = Repo.all(Todo)
-    #render(conn, "index.json", todos: todos)
-    user_id = conn.assigns.current_user.id
-    query = from t in Todo, where: t.owner_id == ^user_id
-    todos = Repo.all(query)
+    todos = Repo.all(Todo)
     render(conn, "index.json", todos: todos)
+    #IO.puts("TESTTT")
+    #IO.inspect(_params)
+    #user_id = conn.assigns.current_user.id
+    #query = from t in Todo, where: t.owner_id == ^user_id
+    #todos = Repo.all(query)
+
+    #render(conn, "index.json", todos: todos)
   end
 
   def create(conn, %{"todo" => todo_params}) do
-    #changeset = Todo.changeset(%Todo{}, todo_params)
-    changeset = Todo.changeset(
-      %Todo{owner_id: conn.assigns.current_user.id}, todo_params
-    )
+    changeset = Todo.changeset(%Todo{}, todo_params)
+    #changeset = Todo.changeset(
+    #  %Todo{owner_id: conn.assigns.current_user.id}, todo_params
+    #)
     case Repo.insert(changeset) do
       {:ok, todo} ->
         conn
@@ -42,15 +45,16 @@ defmodule AirApi.TodoController do
   def update(conn, %{"id" => id, "todo" => todo_params}) do
     todo = Repo.get!(Todo, id)
     changeset = Todo.changeset(todo, todo_params)
-
-    case Repo.update(changeset) do
-      {:ok, todo} ->
-        render(conn, "show.json", todo: todo)
-      {:error, changeset} ->
-        conn
-        |> put_status(:unprocessable_entity)
-        |> render(AirApi.ChangesetView, "error.json", changeset: changeset)
-    end
+    #if(todo.owner_id == conn.assigns)
+    #IO.inspect(todo)
+    #case Repo.update(changeset) do
+    #  {:ok, todo} ->
+    #    render(conn, "show.json", todo: todo)
+    #  {:error, changeset} ->
+    #    conn
+    #    |> put_status(:unprocessable_entity)
+    #    |> render(AirApi.ChangesetView, "error.json", changeset: changeset)
+    #end
   end
 
   def delete(conn, %{"id" => id}) do
@@ -62,4 +66,10 @@ defmodule AirApi.TodoController do
 
     send_resp(conn, :no_content, "")
   end
+
+
+  #defp authorize_user(conn, todo, _) do
+  #  user = conn.current_user
+  #  if ( user && todo.owner_id == )
+  #end
 end

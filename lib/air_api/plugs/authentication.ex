@@ -39,6 +39,9 @@ defmodule AirApi.Authentication do
   end
 
   defp auth_error!(conn) do
-    conn |> put_status(:unauthorized) |> halt()
+    IO.puts("NO CONN")
+    conn
+    |> put_status(:unauthorized)
+    |> halt()
   end
 end
