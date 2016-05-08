@@ -27,3 +27,18 @@ import_config "#{Mix.env}.exs"
 config :phoenix, :generators,
   migration: true,
   binary_id: false
+
+config :guardian, Guardian,
+  issuer: "AirApi.#{Mix.env}",
+  ttl: {30, :days},
+  verify_issuer: true,
+  serializer: AirApi.GuardianSerializer,
+  secret_key: to_string(Mix.env),
+  permissions: %{
+    default: [
+      :read_profile,
+      :write_profile,
+      :read_token,
+      :revoke_token,
+    ],
+  }
