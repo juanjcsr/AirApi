@@ -35,6 +35,7 @@ defmodule AirApi.Router do
     post "/sign_up", LoginController, :create
     get "/sign_in", LoginController, :sign_in
     post "/sign_in", SessionController, :create_web_session
+    delete "/delete", SessionController, :logout
   end
 
   #Other scopes may use custom stacks.

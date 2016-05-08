@@ -4,6 +4,6 @@ defmodule AirApi.PageController do
   def index(conn, _params) do
     user = Guardian.Plug.current_resource(conn)
 
-    render conn, "index.html"
+    render conn, "index.html", current_user: user
   end
 end

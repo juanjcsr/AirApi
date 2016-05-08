@@ -47,4 +47,20 @@ defmodule AirApi.SessionController do
         |> redirect(to: login_path(conn, :sign_in))
     end
   end
+
+  def logout(conn, _params) do
+    conn
+    |> Guardian.Plug.sign_out
+    |> put_flash(:info, "Logged out")
+    |> redirect(to: "/")
+  end
+
+
+
+  def current_user(conn) do
+    user = Guardian.Plug.current_resource(conn)
+    if user, do: user
+  end
+
+  def logged_in?(conn), do: !!current_user(conn)
 end

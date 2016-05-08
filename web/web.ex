@@ -52,6 +52,10 @@ defmodule AirApi.Web do
       import AirApi.Router.Helpers
       import AirApi.ErrorHelpers
       import AirApi.Gettext
+
+      #Helpers for loggedin users in view
+      import AirApi.SessionController, only: [current_user: 1, logged_in?: 1]
+
     end
   end
 
