@@ -18,6 +18,11 @@ defmodule AirApi.Router do
     plug Guardian.Plug.LoadResource
   end
 
+  pipeline :api_auth do
+    plug Guardian.Plug.VerifyHeader, realm: "Bearer"
+    plug Guardian.Plug.LoadResource
+  end
+
   scope "/", AirApi do
     pipe_through [:browser, :browser_auth] # Use the default browser stack
 
@@ -40,7 +45,7 @@ defmodule AirApi.Router do
 
   #Other scopes may use custom stacks.
   scope "/api", AirApi do
-    pipe_through :api
+    pipe_through [:api, :api_auth]
     resources "/todos", TodoController
     resources "/users", UserController, only: [:create]
     resources "/sessions", SessionController, only: [:create]

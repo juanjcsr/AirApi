@@ -10,9 +10,13 @@ defmodule AirApi.UserController do
 
     case Repo.insert(changeset) do
       {:ok, user} ->
-        conn
+        new_conn = Guardian.Plug.api_sign_in(conn, user)
+        jwt = Guardian.Plug.current_token(new_conn)
+        {:ok, claims} = Guardian.Plug.claims(new_conn)
+        exp = Map.get(claims, "exp")
+        new_conn
         |> put_status(:created)
-        |> render("show.json", user: user)
+        |> render("show.json", user: user,jwt: jwt, exp: exp)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)

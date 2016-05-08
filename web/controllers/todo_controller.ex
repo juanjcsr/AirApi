@@ -4,11 +4,14 @@ defmodule AirApi.TodoController do
   alias AirApi.Todo
 
   plug :scrub_params, "todo" when action in [:create, :update]
+  plug Guardian.Plug.EnsureAuthenticated, handler: __MODULE__
 
   #plug AirApi.Authentication
 
   def index(conn, _params) do
     todos = Repo.all(Todo)
+    user = Guardian.Plug.current_resource(conn)
+    IO.inspect(user)
     render(conn, "index.json", todos: todos)
     #IO.puts("TESTTT")
     #IO.inspect(_params)
@@ -65,6 +68,12 @@ defmodule AirApi.TodoController do
     Repo.delete!(todo)
 
     send_resp(conn, :no_content, "")
+  end
+
+  def unauthenticated(conn, _params) do
+    conn
+    |> put_status(401)
+    |> render AirApi.ErrorView, "unauthenticated.json", message: "Authentication required"
   end
 
 
