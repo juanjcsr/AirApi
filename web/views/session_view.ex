@@ -2,13 +2,12 @@ defmodule AirApi.SessionView do
   use AirApi.Web, :view
 
 
-  def render("show.json", %{session: session}) do
-    %{data: render_one(session, AirApi.SessionView, "session.json")}
+  def render("show.json", %{user: user, jwt: jwt, exp: exp}) do
+    %{user: %{email: user.email},
+      session: %{token: jwt, exp: exp}
+     }
   end
 
-  def render("session.json", %{session: session}) do
-    %{token: session.token}
-  end
 
   def render("error.json", _anything ) do
     %{errors: "failed to authenticate"}

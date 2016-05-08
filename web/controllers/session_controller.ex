@@ -10,14 +10,18 @@ defmodule AirApi.SessionController do
 
   def create(conn, %{"user" => user_params}) do
     user = Repo.get_by(User, email: user_params["email"])
+    IO.inspect(user)
     cond do
       user && checkpw(user_params["password"], user.password_hash) ->
-        session_changeset = Session.registration_changeset(%Session{}, %{user_id: user.id})
-        {:ok, session} = Repo.insert(session_changeset)
-        conn
-        |> Guardian.Plug.sign_in(user)
+        #session_changeset = Session.registration_changeset(%Session{}, %{user_id: user.id})
+        #{:ok, session} = Repo.insert(session_changeset)
+        new_conn = Guardian.Plug.api_sign_in(conn, user)
+        jwt = Guardian.Plug.current_token(new_conn)
+        {:ok, claims} = Guardian.Plug.claims(new_conn)
+        exp = Map.get(claims, "exp")
+        new_conn
         |> put_status(:created)
-        |> render("show.json", session: session)
+        |> render("show.json", user: user, jwt: jwt, exp: exp)
       user ->
         conn
         |> put_status(:unauthorized)
