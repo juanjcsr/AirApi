@@ -1,6 +1,8 @@
 defmodule AirApi.TodoHtmlController do
   use AirApi.Web, :controller
 
+  plug Guardian.Plug.EnsureAuthenticated, handler: __MODULE__
+
   alias AirApi.Todo
 
   plug :scrub_params, "todo" when action in [:create, :update]
@@ -63,6 +65,15 @@ defmodule AirApi.TodoHtmlController do
     conn
     |> put_flash(:info, "Todo deleted successfully.")
     |> redirect(to: todo_html_path(conn, :index))
+  end
+
+
+  # handle the case where no authenticated user
+  # was found
+  def unauthenticated(conn, params) do
+    conn
+    |> put_flash(:error, "Authentication required")
+    |> redirect(to: login_path(conn, :sign_in))
   end
 
 end

@@ -15,6 +15,7 @@ defmodule AirApi.SessionController do
         session_changeset = Session.registration_changeset(%Session{}, %{user_id: user.id})
         {:ok, session} = Repo.insert(session_changeset)
         conn
+        |> Guardian.Plug.sign_in(user)
         |> put_status(:created)
         |> render("show.json", session: session)
       user ->
@@ -35,6 +36,7 @@ defmodule AirApi.SessionController do
     cond do
       user && checkpw(user_params["password"], user.password_hash) ->
         conn
+        |> Guardian.Plug.sign_in(user)
         |> put_session(:current_user, user)
         |> put_flash(:info, "You are signed in.")
         |> redirect(to: page_path(conn, :index))
