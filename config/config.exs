@@ -28,8 +28,11 @@ config :phoenix, :generators,
   migration: true,
   binary_id: false
 
+
+
 config :guardian, Guardian,
   issuer: "AirApi.#{Mix.env}",
+  hooks: GuardianDb,
   ttl: {30, :days},
   verify_issuer: true,
   serializer: AirApi.GuardianSerializer,
@@ -42,3 +45,7 @@ config :guardian, Guardian,
       :revoke_token,
     ],
   }
+
+config :guardian_db, GuardianDb,
+  repo: AirApi.Repo,
+  schema_name: "tokens" # Optional, default is "guardian_tokens"

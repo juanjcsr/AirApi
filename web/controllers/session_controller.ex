@@ -59,7 +59,14 @@ defmodule AirApi.SessionController do
     |> redirect(to: "/")
   end
 
-
+  #Logout via API
+  def logout_api(conn, _params) do
+    jwt = Guardian.Plug.current_token(conn)
+    {:ok, claims} = Guardian.Plug.claims(conn)
+    Guardian.revoke!(jwt, claims)
+    conn
+    |> render("logout.json", message: "logged out")
+  end
 
   def current_user(conn) do
     user = Guardian.Plug.current_resource(conn)

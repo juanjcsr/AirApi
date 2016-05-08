@@ -8,6 +8,10 @@ defmodule AirApi.SessionView do
      }
   end
 
+  def render("logout.json", _anything) do
+    %{message: "Logged out"}
+  end
+
 
   def render("error.json", _anything ) do
     %{errors: "failed to authenticate"}

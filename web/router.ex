@@ -49,5 +49,6 @@ defmodule AirApi.Router do
     resources "/todos", TodoController
     resources "/users", UserController, only: [:create]
     resources "/sessions", SessionController, only: [:create]
+    delete "/sessions/logout", SessionController, :logout_api
   end
 end
