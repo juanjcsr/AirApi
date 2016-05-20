@@ -41,14 +41,14 @@ defmodule AirApi.TodoControllerTest do
 
     conn = get conn, todo_path(conn, :index)
 
-    assert Enum.count(json_response(conn, 200)["data"]) == 1
-    assert %{"description" => "some content"} = hd(json_response(conn, 200)["data"])
+    assert Enum.count(json_response(conn, 200)["todos"]) == 1
+    assert %{"description" => "some content"} = hd(json_response(conn, 200)["todos"])
   end
 
   test "shows chosen resource", %{conn: conn} do
     todo = Repo.insert! %Todo{}
     conn = get conn, todo_path(conn, :show, todo)
-    assert json_response(conn, 200)["data"] == %{"id" => todo.id,
+    assert json_response(conn, 200)["todos"] == %{"id" => todo.id,
       "description" => todo.description,
       "cost" => todo.cost}
   end
@@ -64,7 +64,7 @@ defmodule AirApi.TodoControllerTest do
     #assert json_response(conn, 201)["data"]["id"]
     #assert Repo.get_by(Todo, @valid_attrs)
     conn = post conn, todo_path(conn, :create), todo: @valid_attrs
-    assert json_response(conn, 201)["data"]["id"]
+    assert json_response(conn, 201)["todos"]["id"]
     todo = Repo.get_by(Todo, @valid_attrs)
 
     assert todo
@@ -80,7 +80,7 @@ defmodule AirApi.TodoControllerTest do
     todo = Repo.insert! %Todo{}
     conn = put conn, todo_path(conn, :update, todo), todo: @valid_attrs
     IO.inspect(conn)
-    assert json_response(conn, 201)["data"]["id"]
+    assert json_response(conn, 201)["todos"]["id"]
     todo = Repo.get_by(Todo, @valid_attrs)
     assert todo
     assert todo.owner_id == current_user.id
