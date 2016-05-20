@@ -29,7 +29,7 @@ defmodule AirApi.LoginController do
         #|> put_session(:current_user, user.id)
         |> Guardian.Plug.sign_in(user)
         |> put_flash(:info, "Successfully registered")
-        |> redirect(to: page_path(conn, :index))
+        |> redirect(to: todo_html_path(conn, :index))
       {:error, changeset} ->
         render(conn, "sign_up.html", changeset: changeset)
     end

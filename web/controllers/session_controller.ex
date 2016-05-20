@@ -43,7 +43,7 @@ defmodule AirApi.SessionController do
         |> Guardian.Plug.sign_in(user)
         |> put_session(:current_user, user)
         |> put_flash(:info, "You are signed in.")
-        |> redirect(to: page_path(conn, :index))
+        |> redirect(to: todo_html_path(conn, :index))
       true ->
         dummy_checkpw
         conn

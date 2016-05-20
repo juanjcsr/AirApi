@@ -1,4 +1,4 @@
-<h2>Showing tasks</h2>
+<h2>Total <%= Enum.reduce @todos, 0, fn(num, acc) -> num.cost + acc end %></h2>
 
 <table class="table">
   <thead>
@@ -8,6 +8,7 @@
     </tr>
   </thead>
   <tbody>
+
 <%= for todo <- @todos do %>
     <tr>
       <td><%= todo.description %></td>
