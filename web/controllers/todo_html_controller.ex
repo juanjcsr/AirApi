@@ -13,7 +13,7 @@ defmodule AirApi.TodoHtmlController do
   def index(conn, _params) do
     user = Guardian.Plug.current_resource(conn)
     query = from t in Todo, where: t.owner_id == ^user.id
-    todos = Repo.all(query)
+    todos = query |> Todo.ordered_by_date |> Repo.all()
     render(conn, "index.html", todos: todos)
   end
 

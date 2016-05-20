@@ -14,7 +14,7 @@
     <tr>
       <td><%= todo.description %></td>
       <td><%= todo.cost %></td>
-      <td><%= todo.inserted_at%></td>
+      <td><%= todo.inserted_at |> Calendar.Strftime.strftime!("%A, %e %B %Y - %H:%M:%S")%></td>
 
       <td class="text-right">
         <%= link "Show", to: todo_html_path(@conn, :show, todo), class: "btn btn-default btn-xs" %>

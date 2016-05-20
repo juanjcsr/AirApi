@@ -42,6 +42,7 @@ defmodule AirApi.Mixfile do
      {:secure_random, "~> 0.2"},
      {:guardian, "~> 0.10.0"},
      {:guardian_db, "~> 0.5.0"},
+     {:calecto, "~> 0.6.0"},
      {:cowboy, "~> 1.0"}]
   end
 
