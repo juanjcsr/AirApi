@@ -29,7 +29,7 @@ defmodule AirApi.TodoHtmlController do
     case Repo.insert(changeset) do
       {:ok, _todol} ->
         conn
-        |> put_flash(:info, "Todo created successfully.")
+        |> put_flash(:info, "Transaction created successfully.")
         |> redirect(to: todo_html_path(conn, :index))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -41,7 +41,7 @@ defmodule AirApi.TodoHtmlController do
     case Repo.one(query) do
       nil ->
         conn
-        |> put_flash(:info, "Not found")
+        |> put_flash(:error, "Not found")
         |> redirect(to: todo_html_path(conn, :index))
       todo ->
         render(conn, "show.html", todo: todo)
@@ -64,14 +64,14 @@ defmodule AirApi.TodoHtmlController do
         case Repo.update(changeset) do
           {:ok, todo} ->
             conn
-            |> put_flash(:info, "Todol updated successfully.")
+            |> put_flash(:info, "Transaction updated successfully.")
             |> redirect(to: todo_html_path(conn, :show, todo))
           {:error, changeset} ->
             render(conn, "edit.html", todol: todo, changeset: changeset)
         end
       true ->
         conn
-        |> put_flash(:info, "Forbidden")
+        |> put_flash(:error, "Forbidden")
         |> redirect(to: todo_html_path(conn, :index))
     end
 
@@ -89,7 +89,7 @@ defmodule AirApi.TodoHtmlController do
         |> redirect(to: todo_html_path(conn, :index))
       true ->
         conn
-        |> put_flash(:info, "Forbidden")
+        |> put_flash(:error, "Forbidden")
         |> redirect(to: todo_html_path(conn, :index))
     end
   end
