@@ -1,4 +1,5 @@
 defmodule AirApi.TodoController do
+  require IEx
   use AirApi.Web, :controller
 
   alias AirApi.Todo
@@ -9,9 +10,10 @@ defmodule AirApi.TodoController do
   #plug AirApi.Authentication
 
   def index(conn, _params) do
-    todos = Repo.all(Todo)
+
     user = Guardian.Plug.current_resource(conn)
-    IO.inspect(user)
+    query = from t in Todo, where: t.owner_id == ^user.id
+    todos = Repo.all(query)
     render(conn, "index.json", todos: todos)
     #IO.puts("TESTTT")
     #IO.inspect(_params)
@@ -23,6 +25,7 @@ defmodule AirApi.TodoController do
   end
 
   def create(conn, %{"todo" => todo_params}) do
+    user = Guardian.Plug.current_resource(conn)
     changeset = Todo.changeset(%Todo{}, todo_params)
     #changeset = Todo.changeset(
     #  %Todo{owner_id: conn.assigns.current_user.id}, todo_params
@@ -46,6 +49,7 @@ defmodule AirApi.TodoController do
   end
 
   def update(conn, %{"id" => id, "todo" => todo_params}) do
+    IEx.pry
     todo = Repo.get!(Todo, id)
     changeset = Todo.changeset(todo, todo_params)
     #if(todo.owner_id == conn.assigns)
