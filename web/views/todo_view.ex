@@ -12,7 +12,8 @@ defmodule AirApi.TodoView do
   def render("todo.json", %{todo: todo}) do
     %{id: todo.id,
       description: todo.description,
-      cost: todo.cost
+      cost: todo.cost,
+      created: todo.inserted_at |> Calendar.Strftime.strftime!("%Y-%m-%e %H:%M:%S")
      }
   end
 end
