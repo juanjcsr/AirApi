@@ -43,6 +43,7 @@ defmodule AirApi.Mixfile do
      {:guardian, "~> 0.10.0"},
      {:guardian_db, "~> 0.5.0"},
      {:calecto, "~> 0.6.0"},
+     {:exrm, "~>1.0.4"},
      {:cowboy, "~> 1.0"}]
   end
 
