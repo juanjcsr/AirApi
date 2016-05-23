@@ -12,4 +12,5 @@ config :air_api, AirApi.Repo,
   username: "${DATABASE_USERNAME}",
   password: "${DATABASE_PASSWORD}",
   database: "air_api_prod",
+  url: "${DATABASE_URL}",
   size: 20 # The amount of database connections in the pool
