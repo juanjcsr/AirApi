@@ -20,6 +20,9 @@ defmodule AirApi do
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: AirApi.Supervisor]
     Supervisor.start_link(children, opts)
+    ##IO.puts "######### run migrations..."
+    ##Ecto.Migrator.run(AirApi.Repo, Path.join(["#{:code.priv_dir(:air_api)}", "repo", "migrations"]), :up, all: true)
+    ##res
   end
 
   # Tell Phoenix to update the endpoint configuration

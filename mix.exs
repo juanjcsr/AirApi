@@ -19,7 +19,8 @@ defmodule AirApi.Mixfile do
   def application do
     [mod: {AirApi, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :comeonin]]
+                    :phoenix_ecto, :postgrex, :comeonin, :secure_random,
+                    :guardian, :calecto, :cors_plug, :guardian_db]]
   end
 
   # Specifies which paths to compile per environment.
