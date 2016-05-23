@@ -1,23 +1,37 @@
-FROM alpine:edge
+FROM elixir:1.2.5
 
-RUN apk --update add erlang erlang-sasl erlang-crypto erlang-syntax-tools && rm -rf /var/cache/apk/*
+MAINTAINER Shane Sveller <shane@shanesveller.com>
 
-ENV APP_NAME AirApi
-ENV APP_VERSION "0.0.1"
+RUN apt-get update -q && \
+    apt-get -y install \
+    apt-transport-https \
+    curl \
+    libpq-dev \
+    postgresql-client \
+    && apt-get clean -y && \
+    rm -rf /var/cache/apt/*
+
+RUN curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && \
+    echo 'deb https://deb.nodesource.com/node_4.x jessie main' > /etc/apt/sources.list.d/nodesource.list && \
+    apt-get update -q && \
+    apt-get install -y \
+    nodejs \
+    && apt-get clean -y && \
+    rm -rf /var/cache/apt/*
+
+RUN npm install -g npm@3.8.9
+RUN mix local.hex --force && \
+    mix local.rebar --force
+ENV VERSION "0.0.1"
+ENV APP_NAME air_api
 ENV PORT 4000
-
-RUN mkdir -p /$APP_NAME
-ADD rel/$APP_NAME/bin /$APP_NAME/bin
-ADD rel/$APP_NAME/lib /$APP_NAME/lib
-ADD rel/$APP_NAME/releases/start_erl.data                 /$APP_NAME/releases/start_erl.data
-ADD rel/$APP_NAME/releases/$APP_VERSION/$APP_NAME.sh      /$APP_NAME/releases/$APP_VERSION/$APP_NAME.sh
-ADD rel/$APP_NAME/releases/$APP_VERSION/$APP_NAME.boot    /$APP_NAME/releases/$APP_VERSION/$APP_NAME.boot
-ADD rel/$APP_NAME/releases/$APP_VERSION/$APP_NAME.rel     /$APP_NAME/releases/$APP_VERSION/$APP_NAME.rel
-ADD rel/$APP_NAME/releases/$APP_VERSION/$APP_NAME.script  /$APP_NAME/releases/$APP_VERSION/$APP_NAME.script
-ADD rel/$APP_NAME/releases/$APP_VERSION/start.boot        /$APP_NAME/releases/$APP_VERSION/start.boot
-ADD rel/$APP_NAME/releases/$APP_VERSION/sys.config        /$APP_NAME/releases/$APP_VERSION/sys.config
-ADD rel/$APP_NAME/releases/$APP_VERSION/vm.args           /$APP_NAME/releases/$APP_VERSION/vm.args
-
 EXPOSE $PORT
 
-CMD trap exit TERM; /$APP_NAME/bin/$APP_NAME foreground & wait
+RUN mkdir /app
+WORKDIR /app
+COPY rel/air_api/releases/$VERSION/air_api.tar.gz /app/air_api.tar.gz
+RUN tar xvfz air_api.tar.gz
+
+WORKDIR /app/releases/$VERSION
+ENTRYPOINT ["./air_api.sh"]
+CMD ["foreground"]
