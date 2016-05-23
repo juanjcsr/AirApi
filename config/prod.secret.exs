@@ -9,7 +9,7 @@ use Mix.Config
 # Configure your database
 config :air_api, AirApi.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: System.get_env("DATABASE_USERNAME"),
-  password: System.get_env("DATABASE_PASSWORD"),
+  username: "${DATABASE_USERNAME}",
+  password: "${DATABASE_PASSWORD}",
   database: "air_api_prod",
   size: 20 # The amount of database connections in the pool
